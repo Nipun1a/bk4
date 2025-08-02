@@ -1,32 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
-    <title>Task Manager</title>
-    <link rel="stylesheet" href="/stylesheet/style.css">
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Task Manager</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <div class = "main w-full min-h-screen bg-zinc-100 flex items-center justify-center">
-        <div class = "form">
-            <form action = "">
-                <input class = "block w-full p-2 mb-4 border border-gray-300 rounded" type="text" placeholder="Enter your task" required>
-                <textarea class = "block w-full p-2 mb-4 border border-gray-300 rounded" placeholder="Enter your message" required></textarea>
-                <button class = "w-full p-2 bg-blue-500 text-white rounded hover:bg-blue-600" type="submit">Submit</button>
+<body class="bg-zinc-100 min-h-screen flex items-center justify-center">
+  <div class="w-full max-w-md p-4">
+    <form class="bg-white p-4 rounded shadow mb-6" action="/create" method="post">
+      <input class="block w-full p-2 mb-4 border border-gray-300 rounded" type="text" placeholder="Enter your task" required name="title"/>
+      <textarea class="block w-full p-2 mb-4 border border-gray-300 rounded" placeholder="Enter your message" required name="message" name="details"></textarea>
+      <button class="w-full p-2 bg-blue-500 text-white rounded hover:bg-blue-600" type="submit">Submit</button>
+    </form>
 
-            </form>
+    <div class="task-list">
+  <% if (tasks && tasks.length > 0) { %>
+    <h2 class="text-lg font-semibold mb-4">Tasks</h2>
+    <% tasks.forEach(function(task) { %>
+      <div class="task-item bg-white p-4 mb-2 rounded shadow">
+        <h1 class="font-semibold"><%= task.title %></h1>
+        <a class="text-blue-600 underline cursor-pointer" href="/files/<%= task.title.split(" ").join("_") %>.txt">Read more</a>
+        <a class="text-red-600 underline cursor-pointer" href="/delete/<%= task.title.split(" ").join("_") %>">Delete</a>
+        <a class="text-green-600 underline cursor-pointer" href="/edit/<%= task.title.split(" ").join("_") %>">Edit</a>
+      </div>
+    <% }); %>
+  <% } else { %>
+    <h2 class="text-lg font-semibold mb-4">Tasks</h2>
+    <p class="text-gray-500">No tasks found.</p>
+  <% } %>
+</div>
 
-        
-        </div>
+     <!-- <h2 class="text-lg font-semibold mb-4">Tasks</h2>
+      <div class="task-item  bg-white p-4 mb-2 rounded shadow">
+        <h1>task 1</h1>
+      </div>
+      <div class="task-item  bg-white p-4 mb-2 rounded shadow">
+        <h1>task 2</h1>
+      </div>
+      <div class="task-item  bg-white p-4 mb-2 rounded shadow">
+        <h1>task 3</h1>
+      </div>
+      <h1> No other task</h1>
+    </div>-->
 
-        <div class = "task-list mt-8 w-full max-w-md mx-auto">
-            <h2 class = "text-xl font-bold mb-4">Tasks</h2>
-            <ul class = "list-disc pl-5">
-                <li class = "mb-2">Task 1</li>
-                <li class = "mb-2">Task 2</li>
-                <li class = "mb-2">Task 3</li>
-            </ul>
-    </div>
+
+  </div>
 </body>
 </html>
